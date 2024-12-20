@@ -3,9 +3,12 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
-# Load datasets
-raw_data = pd.read_csv('raw_data.csv')
-preprocessed_data = pd.read_csv('preprocessed_data.csv')
+# Load datasets from URLs
+raw_data_path = "https://raw.githubusercontent.com/ask-gth/DS_video/refs/heads/main/raw_data.csv"
+preprocessed_data_path = "https://raw.githubusercontent.com/ask-gth/DS_video/refs/heads/main/preprocessed_data.csv"
+
+raw_data = pd.read_csv(raw_data_path)
+preprocessed_data = pd.read_csv(preprocessed_data_path)
 
 # Sidebar: Select visualization
 st.sidebar.header("Visualization Options")
