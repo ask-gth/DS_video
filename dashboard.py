@@ -47,8 +47,8 @@ elif page == "Model Performance Metrics":
     st.subheader("Model Performance Metrics Comparison")
     
     # Example metrics
-    mse_raw, r2_raw = 200.0, 0.75  # Replace with actual computed metrics
-    mse_train, r2_train = 150.0, 0.85  # Replace with actual computed metrics
+    mse_raw, r2_raw = 31166.61, 0.84 
+    mse_train, r2_train = 3116.05, 0.85  
 
     fig_metrics = go.Figure()
     fig_metrics.add_trace(go.Bar(
