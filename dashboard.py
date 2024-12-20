@@ -7,42 +7,43 @@ import plotly.graph_objects as go
 raw_data_path = "https://raw.githubusercontent.com/ask-gth/DS_video/refs/heads/main/raw_data.csv"
 preprocessed_data_path = "https://raw.githubusercontent.com/ask-gth/DS_video/refs/heads/main/preprocessed_data.csv"
 
+# Load data
 raw_data = pd.read_csv(raw_data_path)
 preprocessed_data = pd.read_csv(preprocessed_data_path)
 
-# Sidebar: Select visualization
-st.sidebar.header("Visualization Options")
-visualization = st.sidebar.selectbox(
-    "Choose a visualization",
-    [
+# Sidebar Navigation
+st.sidebar.header("Navigation")
+page = st.sidebar.radio(
+    "Select a visualization:",
+    (
         "Data Distribution",
         "Model Performance Metrics",
         "Feature Correlation (Preprocessed Data)",
-        "Summary Statistics"
-    ]
+        "Summary Statistics",
+    )
 )
 
 # Title
-st.title("Interactive Dashboard for Reserve Data Analysis")
+st.title("Interactive Dashboard for Dementia Data Analysis")
 
 # Data Distribution
-if visualization == "Data Distribution":
+if page == "Data Distribution":
     st.subheader("Data Distribution")
     
     # Distribution of Species Population (Raw Data)
     st.markdown("### Raw Data Distribution")
     fig_raw = px.histogram(raw_data, x='Species_Population', nbins=20, title="Raw Data Distribution")
-    fig_raw.update_layout(yaxis_title="Reserves Count")
+    fig_raw.update_layout(yaxis_title="Count")
     st.plotly_chart(fig_raw)
     
     # Distribution of Species Population (Preprocessed Data)
     st.markdown("### Preprocessed Data Distribution")
     fig_cleaned = px.histogram(preprocessed_data, x='Species_Population', nbins=20, title="Preprocessed Data Distribution")
-    fig_cleaned.update_layout(yaxis_title="Reserves Count")
+    fig_cleaned.update_layout(yaxis_title="Count")
     st.plotly_chart(fig_cleaned)
 
 # Model Performance Metrics
-elif visualization == "Model Performance Metrics":
+elif page == "Model Performance Metrics":
     st.subheader("Model Performance Metrics Comparison")
     
     # Example metrics
@@ -64,11 +65,14 @@ elif visualization == "Model Performance Metrics":
     st.plotly_chart(fig_metrics)
 
 # Feature Correlation (Preprocessed Data)
-elif visualization == "Feature Correlation (Preprocessed Data)":
+elif page == "Feature Correlation (Preprocessed Data)":
     st.subheader("Feature Correlation (Preprocessed Data)")
     
+    # Select only numeric columns
+    numeric_columns = preprocessed_data.select_dtypes(include=['float64', 'int64'])
+    
     # Compute correlation matrix
-    corr_matrix = preprocessed_data.corr()
+    corr_matrix = numeric_columns.corr()
     
     # Heatmap
     fig_corr = px.imshow(
@@ -80,7 +84,7 @@ elif visualization == "Feature Correlation (Preprocessed Data)":
     st.plotly_chart(fig_corr)
 
 # Summary Statistics
-elif visualization == "Summary Statistics":
+elif page == "Summary Statistics":
     st.subheader("Summary Statistics")
     
     # Raw data summary
